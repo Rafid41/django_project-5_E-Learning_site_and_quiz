@@ -1,0 +1,31 @@
+{% extends 'navbar.html' %}
+
+{% block body_block %}
+
+  {% if user.is_authenticated %}
+  
+      {% if user.related_name_user.account_type == "Teacher" %}
+          
+          <a href="{% url 'App_Quiz:create_exam' %}" class="btn btn-primary">Create a new quiz</a>
+          <br>
+          <hr>
+
+      {% endif %}
+  {% endif %}
+
+  <center>
+    <h2>Available Exams</h2>
+    <h4 style="color:red">Click Quiz links to start quiz</h4>
+  </center>
+  <hr>
+  <ul>
+    {% for exam in exam_list %}
+    {% comment %} {% url 'take_exam' exam.id %} {% endcomment %}
+    <ul class="list-group">
+      <li class="list-group-item">
+        <h4><a href="{% url 'App_Quiz:take_exam' pk=exam.pk %} ">{{ exam.name }}</a></h4>
+      </li>
+    </ul>
+    {% endfor %}
+  </ul>
+{% endblock %}

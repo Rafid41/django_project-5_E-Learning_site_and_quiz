@@ -1,0 +1,17 @@
+{% extends 'navbar.html' %}
+{% block body_block %}
+
+  <h2>Add Question to {{ exam.name }}</h2>
+  <br>
+  <p>Add a question and click "Add Question" button</p>
+  <p>You can add Multiple questions</p>
+  <p>Click "Quiz" in the Navigation bar to stop adding and goto homepage</p>
+
+
+  <form method="post" action="{% url 'App_Quiz:add_question' exam.id %}">
+    {% csrf_token %}
+    {{ question_form.as_p }}
+    <button class="btn btn-primary" type="submit">Add Question</button>
+  </form>
+
+{% endblock %}

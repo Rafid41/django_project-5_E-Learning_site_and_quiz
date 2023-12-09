@@ -1,0 +1,41 @@
+{% extends 'navbar.html' %}
+
+{% block title_block %} Home {% endblock %}
+{% block body_block %}
+
+
+{% if user.is_authenticated %}
+
+    
+    {% if user.related_name_user.account_type == "Teacher" %}
+        
+        <a href="{% url 'App_Article:create_article' %}" class="btn btn-primary">Add Article</a>
+        <br>
+        <hr>
+
+    {% endif %}
+
+
+    
+   
+{% endif %}
+
+
+
+<center><h3 style="color:violet">Articles From Teachers</h3></center>
+
+<hr>
+        {% for article in article_list %}
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <h5><a href="{% url 'App_Article:article_detail' pk=article.pk %}">{{ article.title }}<a/></h5>
+                    <h8><i><strong>Posted on:</strong> {{ article.upload_date }}  &nbsp; | &nbsp;   </i></h8>     <!-- <i> == italic-->
+                    <h8><i><strong>Posted By:</strong> <a href="#">@{{article.author}} </i></a></h8>
+                </li>
+            </ul>
+
+
+        {% endfor %}
+
+
+{% endblock %}

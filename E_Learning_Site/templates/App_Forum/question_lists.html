@@ -1,0 +1,41 @@
+{% extends 'navbar.html' %}
+
+{% block title_block %} Home {% endblock %}
+{% block body_block %}
+
+
+{% if user.is_authenticated %}
+
+    
+    {% if user.related_name_user.account_type == "Student" %}
+        
+        <a href="{% url 'App_Forum:create_question' %}" class="btn btn-primary">Ask a Question</a>
+        <br>
+        <hr>
+
+    {% endif %}
+
+
+    
+   
+{% endif %}
+
+
+
+<center><h3 style="color:violet">Question and Answers Forum</h3></center>
+
+<hr>
+        {% for question in question_list %}
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <h5><a href="{% url 'App_Forum:question_detail' pk=question.pk %}">{{ question.title }}<a/></h5>
+                    <h8><i><strong>Asked on:</strong> {{ question.upload_date }}  &nbsp; | &nbsp;   </i></h8>     <!-- <i> == italic-->
+                    <h8><i><strong>Asked By:</strong> <a href="#">@{{question.author}} </i></a></h8>
+                </li>
+            </ul>
+
+
+        {% endfor %}
+
+
+{% endblock %}

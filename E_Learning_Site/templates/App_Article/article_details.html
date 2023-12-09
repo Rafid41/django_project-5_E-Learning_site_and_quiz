@@ -1,0 +1,64 @@
+{% extends 'navbar.html' %}
+{% load crispy_forms_tags %}
+
+{% block title_block %} Home {% endblock %}
+{% block body_block %}
+
+
+
+        <div>
+            <h2>{{ article.title }}</h2>
+            <br>
+            <p><strong>Category:</strong> {{ article.category}}</p>
+            <br><br>
+            <p>{{ article.description|linebreaks }}</p>
+            <br><br>
+            <h6><strong>Posted by :</strong><a href="#">@{{ article.author }}</a></h6>
+            <h6><strong>Posted On :</strong> {{article.upload_date}}</h6>
+            <br>
+                   
+        </div>
+        <hr>
+            <center>
+                <h3>Comments</h3>
+            </center>  
+        <hr> 
+        {% comment %} comment {% endcomment %}
+        <div class='row'>
+            <div class='col-sm-6'>
+                <br>
+                {% for comment in article.article_comment.all %}
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <p>
+                                <a href="#">@{{comment.user}}({{comment.user.related_name_user.account_type}})<br></a>
+                                {{comment.comment}}<br>
+                                <h8>{{comment.comment_date}}</h8>
+                            </p>
+                        </li>
+                    </ul>
+
+                {% endfor %}
+            </div>
+
+            <div class="col-sm-6">
+                {% if user.is_authenticated %}
+                    <form method="post">
+
+                        {{ comment_form|crispy}}
+                        {% csrf_token %}
+
+                        <button type="submit" class="btn btn-primary btn-sm">Post Comment</button>
+
+                    </form>
+                {% else %}
+                    <h5 style="color: red">Login to post Comment</h5>
+                {% endif %}
+            </div>
+        </div>
+ 
+
+
+
+{% endblock %}

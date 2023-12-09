@@ -1,0 +1,62 @@
+{% extends 'navbar.html' %}
+{% load crispy_forms_tags %}
+
+{% block title_block %} Home {% endblock %}
+{% block body_block %}
+
+
+
+        <div>
+            <h2>{{ question.title }}</h2>
+            <br>
+            <p>{{ question.description|linebreaks }}</p>
+            <br><br>
+            <h6><strong>Asked by :</strong><a href="#">@{{ question.author }}</a></h6>
+            <h6><strong>Asked On :</strong> {{question.upload_date}}</h6>
+            <br>
+                   
+        </div>
+        <hr>
+            <center>
+                <h3>Answers</h3>
+            </center>  
+        <hr> 
+        {% comment %} comment {% endcomment %}
+        <div class='row'>
+            <div class='col-sm-6'>
+                <br>
+                {% for answer in question.question_answers.all %}
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <p>
+                                <a href="#">@{{answer.user}}({{answer.user.related_name_user.account_type}})<br></a>
+                                {{answer.answer}}<br>
+                                <h8>{{answer.answer_date}}</h8>
+                            </p>
+                        </li>
+                    </ul>
+
+                {% endfor %}
+            </div>
+
+            <div class="col-sm-6">
+                {% if user.is_authenticated %}
+                    <form method="post">
+
+                        {{ answer_form|crispy}}
+                        {% csrf_token %}
+
+                        <button type="submit" class="btn btn-primary btn-sm">Post an Answer</button>
+
+                    </form>
+                {% else %}
+                    <h5 style="color: red">Login to Answer the Question</h5>
+                {% endif %}
+            </div>
+        </div>
+ 
+
+
+
+{% endblock %}
